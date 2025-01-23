@@ -17,14 +17,14 @@ interface HewanService {
     @GET("bacahewan.php")
     suspend fun getHewan(): List<Hewan>
 
-    @GET("bacaidhewan.php/{id_hewan}")
+    @GET("bacaidhewan.php")
     suspend fun getHewanById(@Query("id_hewan") idhewan:String):Hewan
 
     @POST("inserthewan.php")
     suspend fun insertHewan(@Body hewan: Hewan)
 
     @PUT("edithewan.php/{id_hewan}")
-    suspend fun updatehewan(@Query("id_hewan")idhewan: String, @Body hewan: Hewan)
+    suspend fun updateHewan(@Query("id_hewan")idhewan: String, @Body hewan: Hewan)
 
     @DELETE("deletehewan.php/{id_hewan}")
     suspend fun deleteHewan(@Query("id_hewan")idhewan: String):retrofit2.Response<Void>
