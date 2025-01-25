@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.rumahhewan.ui.navigasi.DestinasiNavigasi
 import com.example.rumahhewan.ui.viewmodel.hewan.PenyediaHewanViewModel
 import com.example.rumahhewan.ui.viewmodel.hewan.UpdateHewanEvent
 import com.example.rumahhewan.ui.viewmodel.hewan.UpdateHewanState
@@ -30,6 +31,11 @@ import com.example.rumahhewan.ui.viewmodel.jenishewan.UpdateJenisHewanViewModel
 import com.example.rumahhewan.ui.viewmodel.jenishewan.UpdateJenisState
 import kotlinx.coroutines.launch
 
+
+object DestinasiUpdatejenisEntry: DestinasiNavigasi {
+    override val route = "update_jns/{id_jenis_hewan}"
+    override val titleRes = "Entry Jenis"
+}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UpdateJenisHewanScreen(
