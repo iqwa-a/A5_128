@@ -40,23 +40,25 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.rumahhewan.R
 import com.example.rumahhewan.model.Hewan
+import com.example.rumahhewan.ui.navigasi.CustomeTopAppBarr
 import com.example.rumahhewan.ui.navigasi.DestinasiNavigasi
 import com.example.rumahhewan.ui.viewmodel.hewan.HomeHewanState
 import com.example.rumahhewan.ui.viewmodel.hewan.HomeHewanViewModel
 import com.example.rumahhewan.ui.viewmodel.hewan.PenyediaHewanViewModel
 
-object DestinasiHome: DestinasiNavigasi {
+object DestinasiHewanHome : DestinasiNavigasi {
     override val route = "home"
     override val titleRes = "Home Hwn"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(
+fun HomehewanScreen(
     navigateToItemEntry: () -> Unit,
     modifier: Modifier = Modifier,
     onDetailClick: (String) -> Unit = {},
-    viewModel: HomeHewanViewModel = viewModel(factory = PenyediaHewanViewModel.Factory)
+    viewModel: HomeHewanViewModel = viewModel(factory = PenyediaHewanViewModel.Factory),
+
 ) {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
@@ -64,13 +66,12 @@ fun HomeScreen(
         viewModel.getHwn()
     }
 
-    Scaffold(
-        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+    Scaffold(modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            // Top AppBar added for a proper header
-            androidx.compose.material3.TopAppBar(
-                title = { Text("Home Hewan") },
-                scrollBehavior = scrollBehavior
+            CustomeTopAppBarr(
+                title = DestinasiHewanDetail.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
             )
         },
         floatingActionButton = {
