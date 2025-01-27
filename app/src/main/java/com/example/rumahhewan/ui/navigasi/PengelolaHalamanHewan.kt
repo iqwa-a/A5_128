@@ -42,11 +42,16 @@ fun PengelolaHalamanHewan(navController: NavHostController = rememberNavControll
             )
         }
 
-        // Halaman Entry (Tambah Data Hewan)
-        composable(DestinasiEntry.route) {
-            EntryHwnScreen(navigateBack = {
-                navController.navigate(DestinasiHome.route) {
-                    popUpTo(DestinasiHome.route) { inclusive = true }
+        // ===========================================
+        // Bagian Hewan
+        // ===========================================
+
+        // Halaman Home Hewan
+        composable(DestinasiHewanHome.route) {
+            HomehewanScreen(
+                navigateToItemEntry = { navController.navigate(DestinasihewanInsertEntry.route) },
+                onDetailClick = { id_hewan ->
+                    navController.navigate("${DestinasiHewanDetail.route}/$id_hewan")
                 }
             })
         }
@@ -64,9 +69,16 @@ fun PengelolaHalamanHewan(navController: NavHostController = rememberNavControll
             )
         }
 
+        // Halaman Insert Hewan
+        composable(DestinasihewanInsertEntry.route) {
+            EntryHwnScreen(
+                navigateBack = { navController.navigateUp() }
+            )
+        }
+
         // Halaman Update Hewan
         composable(
-            route = "update_hewan/{id_hewan}",
+            route = DestinasiUpdateHewan.route,
             arguments = listOf(navArgument("id_hewan") { type = NavType.StringType })
         ) { backStackEntry ->
             val idhewan = backStackEntry.arguments?.getString("id_hewan") ?: return@composable
