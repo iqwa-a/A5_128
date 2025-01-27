@@ -1,5 +1,6 @@
 package com.example.rumahhewan.repository
 
+import com.example.rumahhewan.Service.HewanService
 import com.example.rumahhewan.model.Hewan
 import okio.IOException
 
@@ -35,6 +36,6 @@ class NetworkHewanRepository(private val hewanApiService: HewanService) : HewanR
 
     override suspend fun getHewan(): List<Hewan> = hewanApiService.getHewan()
     override suspend fun getHewanById(idhewan: String): Hewan {
-        return hewanApiService.geHewanById(idhewan)
+        return hewanApiService.getHewanById(idhewan)
     }
 }
