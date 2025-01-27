@@ -22,6 +22,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -30,10 +31,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.rumahhewan.ui.navigasi.CustomeTopAppBarr
 import com.example.rumahhewan.ui.navigasi.DestinasiNavigasi
 import com.example.rumahhewan.ui.viewmodel.hewan.DetailHewanState
 import com.example.rumahhewan.ui.viewmodel.hewan.DetailHewanViewModel
@@ -61,11 +64,17 @@ fun DetailHewanScreen(
     Scaffold(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
+            CustomeTopAppBarr(
+                title = DestinasiHewanDetail.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
         },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate("update_mhs/$idhewan")
+                    navController.navigate("update_hwn/$idhewan")
                 },
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier.padding(18.dp)
@@ -74,6 +83,7 @@ fun DetailHewanScreen(
             }
         }
     ) { innerPadding ->
+        // Menerapkan padding dari Scaffold ke DetailBody
         DetailBody(
             detailHewanState = hewanState,
             onDeleteClick = {
@@ -82,7 +92,8 @@ fun DetailHewanScreen(
                 }
             },
             modifier = Modifier
-                .padding(innerPadding)
+                .padding(innerPadding) // Ini memastikan konten tidak tertumpuk dengan TopAppBar
+                .fillMaxSize()
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
         )
@@ -97,14 +108,25 @@ fun DetailBody(
 ) {
     when (detailHewanState) {
         is DetailHewanState.Loading -> {
-            CircularProgressIndicator(modifier = modifier.fillMaxSize())
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = modifier.fillMaxSize()
+            ) {
+                CircularProgressIndicator()
+            }
         }
         is DetailHewanState.Error -> {
-            Text(
-                text = detailHewanState.message,
-                color = Color.Red,
-                modifier = modifier.fillMaxSize().wrapContentSize(Alignment.Center)
-            )
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = modifier.fillMaxSize()
+            ) {
+                Text(
+                    text = detailHewanState.message,
+                    color = Color.Red,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
         is DetailHewanState.Success -> {
             val hewan = detailHewanState.hewan
@@ -136,8 +158,8 @@ fun DetailBody(
 fun ComponentDetailHwn(
     modifier: Modifier = Modifier,
     judul: String,
-    isinya: String,
-){
+    isinya: String
+) {
     Column(
         modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
@@ -148,7 +170,6 @@ fun ComponentDetailHwn(
             fontWeight = FontWeight.Bold,
             color = Color.Gray
         )
-
         Text(
             text = isinya,
             fontSize = 19.sp,
